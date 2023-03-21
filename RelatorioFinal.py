@@ -62,7 +62,7 @@ def verificaNota():
 
     return primeiraNotaValida, segundaNotaValida
         
-def calculoMedia(nome, nota1, nota2, lista):
+def calculoMedia(nome, nota1, nota2):
     media = (nota1 + nota2)/2
     lista = [nome, media]
     return lista
@@ -73,13 +73,17 @@ def exibeResultados(nomecommedia):
     notasSoma = 0
     maiorMedia = []
     menorMedia = []
+    maiorMediaAtual = 0
+    menorMediaAtual = 10
     for i in range(notasTamanho):
         for j in range(len(nomecommedia[i])):
             if j == 1:
                 notasSoma += nomecommedia[i][j]
-                if nomecommedia[i][j] > nomecommedia[i-1][j]:
+                if nomecommedia[i][j] > maiorMediaAtual:
+                    maiorMediaAtual = nomecommedia[i][j]
                     maiorMedia = nomecommedia[i]
-                else:
+                if nomecommedia[i][j] < menorMediaAtual:
+                    menorMediaAtual = nomecommedia[i][j]
                     menorMedia = nomecommedia[i]
 
     mediaNotas = notasSoma/notasTamanho
@@ -118,19 +122,17 @@ def recebeValores():
             listaAluno += [nomeAluno, primeiraNotaValida, segundaNotaValida]
             listaTurma += [listaAluno]
         
-        listaMedias = []
         nomeMedia = []
 
         for j in range(len(listaTurma)):
-            for k in range(len(listaTurma[j])):
-                if k == 0:
-                    nomeAtual = listaTurma[j][k]
-                elif k == 1:
-                    notaUmAtual = listaTurma[j][k]
-                elif k == 2:
-                    notaDoisAtual = listaTurma[j][k]
 
-            nomeMedia += [calculoMedia(nomeAtual, notaUmAtual, notaDoisAtual, listaMedias)]
+            nomeAtual = listaTurma[j][0]
+
+            notaUmAtual = listaTurma[j][1]
+
+            notaDoisAtual = listaTurma[j][2]
+
+            nomeMedia += [calculoMedia(nomeAtual, notaUmAtual, notaDoisAtual)]
 
         exibeResultados(nomeMedia)
 
